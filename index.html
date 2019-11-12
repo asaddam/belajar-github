@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Document</title>
+</head>
+<body>
+    Novice  <input type="radio" name="category" value="Novice" checked/>
+    Amateur <input type="radio" name="category" value="Amateur" />
+    Pro     <input type="radio" name="category" value="Professional" />
+    <input type="button" value="click" onclick="showCategory()"/>
+</body>
+</html>
+
+<script>
+    function showCategory(){
+        var category = document.getElementsByName('category')
+        console.log(category)
+        for(var i=0; i<category.length; i++){
+            if(category[i].checked){
+                alert(category[i].value)
+            }
+        }
+        // return category;
+    }
+
+</script>

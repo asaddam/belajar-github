@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>Simple Ecommerce</title>
+    <style>
+        table, tr, td{
+            border: 2px solid black;
+            border-collapse: collapse;
+            padding: 10px;
+            margin: 10px;
+        }
+    </style>
+</head>
+<body>
+    <center>
+        <h1>Daftar Belanja Toko PonPon</h1>
+        <table>
+            <thead>
+            <tr>
+                <td>Nomor</td>
+                <td>Nama</td>
+                <td>Image</td>
+                <td>Harga</td>
+                <td>Action</td>
+            </tr>
+            </thead>
+            <tbody id="menu">
+                
+
+            </tbody>
+        </table>
+        <h2 id="keranjang">Keranjang Belanja</h2>
+        <table id="tabel">
+            <thead>
+                <tr>
+                    <td>Nomor</td>
+                    <td>Menu</td>
+                    <td>Image</td>
+                    <td>Harga</td>
+                    <td>Delete</td>
+                </tr>
+            </thead>
+            <tbody id="cart">
+                
+            </tbody>
+        </table>
+
+        <h2 id="checkout">
+            <input type="button" value="Check out" onclick="checkOut()"/>
+        </h2>
+
+    </center>
+    <script>
+        class produk{
+            constructor(nama, image, harga){
+                this.nama = nama,
+                this.image = image,
+                this.harga = harga
+            }
+        }
+        var cart = []
+        var menu = [new produk('Iphone', 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-11-pro-max-gold-select-2019?wid=940&hei=1112&fmt=png-alpha&qlt=80&.v=1566953859132',
+                    11000),
+                    new produk('Oneplus', 'https://gloimg.gbtcdn.com/soa/gb/pdm-product-pic/Electronic/2019/05/17/source-img/20190517091239_87509.jpg',
+                    90000),
+                    new produk('Samsung', 'https://image-us.samsung.com/SamsungUS/mobile/phones/06102019-new/NEW_Regular_S10_Lockup1_Blue_gallery.jpg?$product-details-jpg$',
+                    10000)]
+                    
+        function printMenu(){
+            var output = ''
+            for(var i=0; i< menu.length; i++){
+                output += `
+                        <tr>
+                            <td>${i+1}</td>
+                            <td>${menu[i].nama}</td>
+                            <td><img src="${menu[i].image}" alt='foto hp' width="100px"></td>
+                            <td>${menu[i].harga}</td>
+                            <td><input type="button" value="Add To Cart" onclick="addToCart(${i})"</td>
+                        </tr>`
+            }
+            document.getElementById("menu").innerHTML = output
+        }
+        printMenu()
+
+        function hapus(index){
+            var hapus = prompt('Anda yakin ingin menghapus ? \n Ya/ Tidak')
+            if(hapus == 'ya'){
+                cart.splice(index, 1)
+                printCart()
+            }   
+        }
+        
+        function addToCart(index){
+            cart.push(menu[index])
+            printCart()
+        }
+
+        function printCart(){
+            var output = ''
+            for(var i=0; i< cart.length; i++){
+                output += `
+                        <tr>
+                            <td>${i+1}</td>
+                            <td>${cart[i].nama}</td>
+                            <td><img src="${cart[i].image}" alt='foto hp' width="100px"></td>
+                            <td>${cart[i].harga}</td>
+                            <td><input type="button" value="Delete" onclick="hapus(${i})"</td>
+                        </tr>`
+            }
+            document.getElementById("cart").innerHTML = output
+        }
+
+        function checkOut(){
+            var hasil = 0
+            for(var i=0; i<cart.length; i++){
+                hasil += cart[i].harga
+            }
+            console.log(hasil)
+            var checkout = `Total belanja Anda ${hasil}, Terima Kasih telah berbelanja di Toko Kami`
+            document.getElementById("checkout").innerHTML = checkout
+            cart.splice(0, cart.length)
+            printCart()
+        }
+
+
+    </script>
+</body>
+</html>
